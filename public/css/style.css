@@ -1,0 +1,25 @@
+@media (min-width: 992px) {
+
+    body{
+        background: url("../images/background.jpg") no-repeat fixed;
+        background-size: cover;
+    }
+}
+
+@media (max-width: 992px) {
+    body{
+        background: url("../images/background-xs.jpg") no-repeat 50% 50% fixed;
+        background-size: cover;
+    }
+}
+
+.content{
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: white;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+    opacity: 0.93;
+}
+
