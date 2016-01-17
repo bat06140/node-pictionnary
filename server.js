@@ -28,6 +28,7 @@ logger.info('Routes load');
 require('./routes')(app);
 logger.info('Routes start');
 
+// Erreur 404
 app.use(function(req, res){
     res.status(404);
     res.render('error/404');
