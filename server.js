@@ -24,15 +24,14 @@ app.use(express.static(__dirname + '/public')); // Indique que le dossier /publi
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
-
-
-
 logger.info('Routes load');
 require('./routes')(app);
 logger.info('Routes start');
 
-
+app.use(function(req, res){
+    res.status(404);
+    res.render('error/404');
+});
 
 logger.info('server start');
 app.listen(1313);
