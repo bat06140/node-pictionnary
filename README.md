@@ -3,6 +3,8 @@ Auteur : Elbaz Jérémie
 Promo : LPSIL IDSE
 
 ## Fonctionnalité
-- Connexion / Déconnexion
-- Intérroger BDD
-- Session 
+- Connexion Facebook / Local
+- Déconnexion
+- Paint
+- Guess
+- Inscription
