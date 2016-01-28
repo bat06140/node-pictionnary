@@ -10,6 +10,8 @@
     <!-- Bootstrap -->
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap-social.css" rel="stylesheet">
+    <link href="/css/font-awesome.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,9 +43,10 @@
                 <li><a href="/"><i class="glyphicon glyphicon-home"></i> Accueil</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {{#if auth}}
-                    <li><a href="/auth/signout"><i class="glyphicon glyphicon-off"></i> Déconnection</a></li>
+                {{#if user}}
+                    <li><a href="/auth/signout"><i class="glyphicon glyphicon-off"></i> Déconnexion</a></li>
                 {{/if}}
+                <li class="fb-like" data-href="http://localhost:1313/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true" style="padding-top: 15px; padding-bottom: 15px;"></li>
             </ul>
         </div>
     </div>

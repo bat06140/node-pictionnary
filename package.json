@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.14.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.3",
     "express-session": "^1.13.0",
     "handlebars": "^4.0.5",
@@ -10,6 +12,9 @@
     "log4js": "^0.6.29",
     "morgan": "^1.6.1",
     "mysql": "^2.10.2",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.0.0",
+    "passport-local": "^1.0.0",
     "serve-favicon": "^2.3.0",
     "sha256": "^0.2.0",
     "sqlstring": "^1.0.0",

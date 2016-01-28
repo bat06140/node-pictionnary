@@ -13,6 +13,12 @@
     }
 }
 
+@media (min-width: 768px) {
+    .form-signin{
+        border-right: 1px solid grey;
+    }
+}
+
 .content{
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

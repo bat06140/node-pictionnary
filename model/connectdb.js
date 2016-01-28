@@ -15,7 +15,7 @@ exports.escape = function(value) {
     return SqlString.escape(value, false);
 };
 
-exports.query = function(req,res,query, callback) {
+exports.selection = function(query,params,callback) {
 
     pool.getConnection(function(err,connection){
         if (err) {
@@ -23,13 +23,108 @@ exports.query = function(req,res,query, callback) {
             return callback({"erreur" : "Erreur de connection base de donnée"});
         }
 
-        logger.debug('Connected as id ' + connection.threadId);
-        logger.debug('Query : ' + query);
+        logger.debug('[QUERY] Connected as id ' + connection.threadId);
 
-        connection.query(query,function(err,rows){
+        connection.query(query, params, function(err, result){
             connection.release();
             if(!err) {
-                return callback(rows);
+                return callback(result);
+            }
+        });
+
+        connection.on('error', function(err) {
+            return callback({"erreur" : "Erreur de connection base de donnée"});
+        });
+    });
+};
+
+exports.insertion = function(query, params, callback){
+    pool.getConnection(function(err,connection){
+        if(err){
+            connection.release();
+            return callback({"erreur" : "Erreur de connection base de donnée"});
+        }
+
+        logger.debug('[INSERT] Connected as id ' + connection.threadId);
+        logger.debug('Insert : ' + query);
+
+        connection.query(query, params, function(err, result){
+            connection.release();
+            if(!err) {
+                return callback(result);
+            }
+        });
+
+        connection.on('error', function(err) {
+            return callback({"erreur" : "Erreur de connection base de donnée"});
+        });
+    });
+};
+
+exports.verifLogin = function(email, callback){
+    pool.getConnection(function(err,connection){
+        if(err){
+            connection.release();
+            return callback({"erreur" : "Erreur de connection base de donnée"});
+        }
+
+        logger.debug('[AUTH] Connected as id ' + connection.threadId);
+
+        params = {email : email};
+        connection.query('SELECT * FROM users WHERE ?', params, function(err, result){
+            connection.release();
+            if(!err) {
+                return callback(result);
+            }
+        });
+
+        connection.on('error', function(err) {
+            return callback({"erreur" : "Erreur de connection base de donnée"});
+        });
+    });
+};
+
+exports.findOrCreate =  function(user, callback){
+    pool.getConnection(function(err,connection){
+        if(err){
+            connection.release();
+            return callback({"erreur" : "Erreur de connection base de donnée"});
+        }
+
+        connection.query('UPDATE users SET facebook = ?, facebook_picture = ?, nom = ? WHERE email = ?', [user.id, user.photos[0].value, user.displayName, user.emails[0].value], function(err, result){
+            connection.release();
+            if(!err) {
+                if(result.affectedRows == 0){
+                    sql = "INSERT INTO users SET ?";
+                    params = {
+                        email: user.emails[0].value,
+                        facebook : user.id,
+                        facebook_picture : user.photos[0].value,
+                        nom : user.displayName
+                    };
+                    exports.insertion(sql, params, function(result){
+                        logger.debug('[AUTH] Insert as id ' + connection.threadId);
+                        user = {
+                            id : result.insertId,
+                            email : user.emails[0].value,
+                            picture : user.photos[0].value,
+                            name : user.displayName
+                        };
+                        callback(user);
+                    });
+                } else {
+                    exports.verifLogin(user.emails[0].value, function(result){
+                        logger.debug('[AUTH] select as id ' + connection.threadId);
+                        result = result[0];
+                        user = {
+                            id : result.id,
+                            email : result.email,
+                            picture : result.facebook_picture,
+                            name : result.nom
+                        };
+                        callback(user);
+                    });
+                }
             }
         });
 

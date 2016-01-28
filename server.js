@@ -7,6 +7,9 @@ var morgan = require('morgan'); // Charge le middleware de logging
 var favicon = require('serve-favicon'); // Charge le middleware de favicon
 var logger = require('log4js').getLogger('Server');
 var validator = require('validator');
+var passport = require('passport');
+var flash = require('connect-flash');
+var cookieParser = require('cookie-parser');
 
 var app = express();
 
@@ -14,18 +17,23 @@ var app = express();
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 app.engine('html', require('hbs').__express);
-
+app.use(cookieParser('secret'));
 app.use(session({secret: 'a2ze4rty485jh4g763fds3q64',
                  resave: true,
-                 saveUninitialized: true}));
+                 saveUninitialized: true
+}));
 app.use(morgan('combined')); // Active le middleware de logging
 app.use(express.static(__dirname + '/public')); // Indique que le dossier /public contient des fichiers statiques (middleware chargé de base)
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 logger.info('Routes load');
 require('./routes')(app);
+require('./config/passport')(passport);
 logger.info('Routes start');
 
 // Erreur 404

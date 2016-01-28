@@ -94,7 +94,7 @@ function loadProfilePic(e) {
             // et avec une largeur de width et une hauteur de height
             ctx.drawImage(img, (MAX_WIDTH - width)/2 , (MAX_HEIGHT - height)/2, width, height);
             // on exporte le contenu du canvas (l'image redimensionnée) sous la forme d'une data url
-            dataurl = canvas.toDataURL("image/png");
+            dataurl = canvas.toDataURL();
 
             // on donne finalement cette dataurl comme valeur au champs profilepic
             document.getElementById("picture").value = dataurl;

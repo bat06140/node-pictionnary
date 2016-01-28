@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="col-md-4 col-xs-12" style="opacity: 0.95">
+        {{#if errors}}
+            <div class="alert alert-danger">
+                <p>Des erreurs ont été rencontrées :</p>
+                <ul>
+                    {{#each errors}}
+                    <li>{{.}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{else}}
+            <div class="alert alert-info">Les champs obligatoires sont indiqués par *</div>
+        {{/if}}
+    </div>
+
+    <form action="/auth/signup" method="post" name="inscription">
+        <div class="col-md-offset-1 col-md-7 col-xs-12 content">
+            <h1>Inscription</h1>
+            <div class="col-md-6">
+                <h2>Identité</h2>
+                <div class='form-group'><label for='email'>E-mail *</label>
+                    <input type='email' id='email' name='email' value="{{champ.email}}" class='form-control' placeholder='name@something.com' autofocus required />
+                </div>
+                <div class='form-group'><label for='passwd'>Mot de passe *</label>
+                    <input type='password' id='passwd' name='passwd' class='form-control' placeholder='4 à 8 caractères alphanumériques' pattern='[a-zA-Z0-9]{4,8}' required />
+                </div>
+                <div class='form-group'><label for='passwdconf'>Confirmation du mot de passe *</label>
+                    <input type='password' id='passwdconf' class='form-control' required onkeyup='verifPw(this)'/>
+                </div>
+                <div class='form-group'><label for='firstname'>Prénom *</label>
+                    <input type='text' id='firstname' value="{{champ.firstname}}" name='firstname' class='form-control' placeholder='Jean' required />
+                </div>
+                <div class='form-group'><label for='lastname'>Nom</label>
+                    <input type='text' id='lastname' value="{{champ.lastname}}" name='lastname' class='form-control' placeholder='Dupond' />
+                </div>
+                <div class='form-group'><label for='number'>Téléphone</label>
+                    <input type='tel' id='number' name='number' value="{{champ.number}}" class='form-control' placeholder='0606060606' pattern='[0-9]{10}'/>
+                </div>
+                <div class="form-inline" style="margin-bottom: 16px;">
+                    <label>Sexe :</label>
+                    <div class='form-group'><label for='masculin' class="radio-inline">Homme</label>
+                        <input type='radio' name='sexe' id='masculin' value='m' checked />
+                    </div>
+                    <div class='form-group'><label for='feminin' class="radio-inline">Femme</label>
+                        <input type='radio' name='sexe' id='feminin' value='f' />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Information</h2>
+                <div class='form-group'><label for='website'>Site web</label>
+                    <input type='url' id='website' name='website' value='{{champ.website}}' class='form-control' placeholder='http://www.website.com'/>
+                </div>
+                <div class='form-group'><label for='birthday'>Anniversaire *</label>
+                    <input type='date' id='birthday' name='birthday' value='{{champ.birthday}}' class='form-control' placeholder='AAAA-MM-JJ' required onchange='calculDate(this)'/>
+                </div>
+                <div class='form-group'><label for='age'>Age</label>
+                    <input type='number' id='age' name='age' class='form-control' disabled='disabled' />
+                </div>
+                <div class='form-group'><label for='ville'>Ville</label>
+                    <input type='text' id='ville' name='ville' value='{{champ.ville}}' class='form-control' placeholder='Sophia-Antipolis'/>
+                </div>
+                <div class='form-group'><label for='color'>Couleur préféré</label>
+                    <input type='color' id='color' name='color' value='{champ.{color}}' class='form-control' placeholder=''/>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label for="photo">Photo</label>
+                            <input type="file" id="photo" onchange="loadProfilePic(this)" style="color: transparent"/>
+                            <input type="hidden" name="picture" id="picture" />
+                        </div>
+                        <div class="col-sm-7">
+                            <canvas id="preview" style="border: 1px solid black; width: 96px; height: 96px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taille">Taille :</label><span id="lataille" style="padding-left: 10px;">1 m</span>
+                    <input type="range" name="taille" id="taille" value="{{champ.taille}}" max="2.5" min="0" step="0.01"/>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <button class='btn btn-primary'>S'inscrire</button>
+            </div>
+        </div>
+    </form>
+    <script language="JavaScript">
+        window.onload = function () {
+            calculDate(document.getElementById('birthday'));
+        }
+    </script>
+</div>
