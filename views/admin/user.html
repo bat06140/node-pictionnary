@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="col-md-4 col-xs-12" style="opacity: 0.95">
+        {{#if errors}}
+        <div class="alert alert-danger">
+            <p>Des erreurs ont été rencontrées :</p>
+            <ul>
+                {{#each errors}}
+                <li>{{.}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        {{else}}
+            <div class="alert alert-info">Les champs obligatoires sont indiqués par *</div>
+        {{/if}}
+    </div>
+
+    <form action="/admin/user/{{champ.id}}" method="post" name="inscription">
+        <div class="col-md-offset-1 col-md-7 col-xs-12 content">
+            <h1>Modification de profil</h1>
+            <div class="col-xs-12">
+                <h2>Identité</h2>
+                <div class='form-group'><label for='email'>E-mail</label>
+                    <input type='email' id='email' name='email' value="{{champ.email}}" class='form-control' placeholder='name@something.com' autofocus />
+                </div>
+                <div class='form-group'><label for='passwd'>Mot de passe</label>
+                    <input type='password' id='passwd' name='passwd' class='form-control' placeholder='4 à 8 caractères alphanumériques' pattern='[a-zA-Z0-9]{4,8}' />
+                </div>
+                <div class='form-group'><label for='passwdconf'>Confirmation du mot de passe</label>
+                    <input type='password' id='passwdconf' class='form-control' onkeyup='verifPw(this)'/>
+                </div>
+                <div class='form-group'><label for='prenom'>Prénom</label>
+                    <input type='text' id='prenom' value="{{champ.prenom}}" name='prenom' class='form-control' placeholder='Jean' />
+                </div>
+                <div class='form-group'><label for='nom'>Nom</label>
+                    <input type='text' id='nom' value="{{champ.nom}}" name='nom' class='form-control' placeholder='Dupond' />
+                </div>
+            </div>
+            <div class="col-xs-6 text-center">
+                <button class='btn btn-primary'>Modifier</button>
+            </div>
+            <div class="col-xs-6 text-center">
+                <a class='btn btn-danger' href="/admin/user/delete/{{champ.id}}">Supprimer</a>
+            </div>
+        </div>
+    </form>
+    <script language="JavaScript">
+        window.onload = function () {
+            calculDate(document.getElementById('birthdate'));
+        }
+    </script>
+</div>

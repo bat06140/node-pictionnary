@@ -32,7 +32,7 @@
                             <td>{{this.nom}}</td>
                             <td><a href="/draw/view/{{this.id}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a></td>
                             <td>
-                                <form method="post">
+                                <form method="post" action="/home/welcome">
                                     <input type="hidden" name="dessin" value="{{this.id}}"/>
                                     <button class="btn btn-danger">
                                         <i class="glyphicon glyphicon-trash"></i>

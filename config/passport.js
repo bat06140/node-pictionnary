@@ -49,12 +49,12 @@ module.exports = function(passport) {
                             name: result.nom
                         };
                     }else if(result.profilepic.length == 0) {
-                        logger.debug("[picture default]");
                         user = {
                             id: result.id,
                             email: result.email,
                             picture: "/images/default.png",
-                            name: result.nom
+                            name: result.prenom,
+                            admin : result.admin
                         };
                     }else {
                         logger.debug("[picture]");
@@ -67,7 +67,8 @@ module.exports = function(passport) {
                             id: result.id,
                             email: result.email,
                             picture: str,
-                            name: result.nom
+                            name: result.prenom,
+                            admin : result.admin
                         };
                     }
                     done(null, user);

@@ -1,0 +1,35 @@
+<div class="col-xs-12 content">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Les utilisateurs</h1>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table text-center">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>Nom</td>
+                <td>Email</td>
+                <td>Voir</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#if users}}
+                {{#each users}}
+                    <tr>
+                        <td>{{this.id}}</td>
+                        <td>{{this.prenom}}</td>
+                        <td>{{this.email}}</td>
+                        <td><a href="/admin/user/{{this.id}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+                    </tr>
+                {{/each}}
+            {{else}}
+            <tr>
+                <td colspan="4">Pas d'utilisateur.</td>
+            </tr>
+            {{/if}}
+            </tbody>
+        </table>
+    </div>
+</div>

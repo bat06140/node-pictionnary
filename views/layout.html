@@ -44,7 +44,17 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {{#if user}}
-                    <li><a href="/auth/signout"><i class="glyphicon glyphicon-off"></i> Déconnexion</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> Profil<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/"><i class="glyphicon glyphicon-wrench"></i> Settings</a></li>
+                            {{#if user.admin}}
+                                <li><a href="/admin"><i class="glyphicon glyphicon-wrench"></i> Administration</a></li>
+                            {{/if}}
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/auth/signout"><i class="glyphicon glyphicon-off"></i> Déconnexion</a></li>
+                        </ul>
+                    </li>
                 {{/if}}
                 <li class="fb-like" data-href="http://localhost:1313/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true" style="padding-top: 15px; padding-bottom: 15px;"></li>
             </ul>

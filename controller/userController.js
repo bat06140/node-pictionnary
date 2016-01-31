@@ -49,3 +49,18 @@ exports.drawPaintPost = function(req, res){
         });
     }
 };
+
+exports.welcomePost = function(req, res){
+    if(!validator.isNumeric(req.body.dessin)){
+        res.redirect('/error');
+    }else{
+        mysql.selection("DELETE FROM drawings WHERE id = ? AND id_user = ?", [req.body.dessin, req.user.id], function(result){
+            logger.info(result);
+            if(result.affectedRows != 1){
+                res.redirect('/error');
+            }else{
+                res.redirect('/home/welcome');
+            }
+        })
+    }
+};

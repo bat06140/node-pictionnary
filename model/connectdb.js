@@ -91,7 +91,7 @@ exports.findOrCreate =  function(user, callback){
             return callback({"erreur" : "Erreur de connection base de donnée"});
         }
 
-        connection.query('UPDATE users SET facebook = ?, facebook_picture = ?, nom = ? WHERE email = ?', [user.id, user.photos[0].value, user.displayName, user.emails[0].value], function(err, result){
+        connection.query('UPDATE users SET facebook = ?, facebook_picture = ?, prenom = ? WHERE email = ?', [user.id, user.photos[0].value, user.displayName, user.emails[0].value], function(err, result){
             connection.release();
             if(!err) {
                 if(result.affectedRows == 0){
@@ -100,7 +100,7 @@ exports.findOrCreate =  function(user, callback){
                         email: user.emails[0].value,
                         facebook : user.id,
                         facebook_picture : user.photos[0].value,
-                        nom : user.displayName
+                        prenom : user.displayName
                     };
                     exports.insertion(sql, params, function(result){
                         logger.debug('[AUTH] Insert as id ' + connection.threadId);
@@ -108,7 +108,8 @@ exports.findOrCreate =  function(user, callback){
                             id : result.insertId,
                             email : user.emails[0].value,
                             picture : user.photos[0].value,
-                            name : user.displayName
+                            name : user.displayName,
+                            admin : result.admin
                         };
                         callback(user);
                     });
@@ -120,7 +121,8 @@ exports.findOrCreate =  function(user, callback){
                             id : result.id,
                             email : result.email,
                             picture : result.facebook_picture,
-                            name : result.nom
+                            name : result.prenom,
+                            admin : result.admin
                         };
                         callback(user);
                     });
