@@ -70,3 +70,35 @@ exports.settingGet = function(req, res){
         res.render('user/setting', {user: req.user, champ: result[0]});
     });
 };
+
+exports.settingPost = function(req, res){
+    errors = [];
+    if(!validator.isAlpha(req.body.prenom))
+        errors[errors.length] = "Format du prénom invalide";
+    if(!validator.isNull(req.body.nom) && !validator.isAlpha(req.body.nom))
+        errors[errors.length] = "Format du nom invalide";
+    if(!validator.isNull(req.body.tel) && !validator.isMobilePhone(req.body.tel, 'fr-FR'))
+        errors[errors.length] = "Format du numéro de téléphone invalide";
+    if(!validator.isNull(req.body.website) && !validator.isURL(req.body.website, {protocols: ['http','https']}))
+        errors[errors.length] = "Format du site web invaldie";
+    if(!validator.isNull(req.body.ville) && !validator.isAlpha(req.body.ville))
+        errors[errors.length] = "Format de la ville invalide";
+    if(!validator.isNull(req.body.couleur) && !validator.isHexColor(req.body.couleur))
+        errors[errors.length] = "Format de la couleur invalide";
+    if(!validator.isNull(req.body.taille) && !validator.isFloat(req.body.taille, {min: 0, max: 2.5}))
+        errors[errors.length] = "Format de la taille invalide";
+
+    if(errors.length != 0){
+        res.render('user/setting', {user: req.user, champ:req.body, errors:errors});
+    }else{
+        mysql.selection("UPDATE users SET prenom = ?, nom = ?, tel = ?, website = ?, ville = ?, couleur = ?, taille = ? WHERE id = ?",
+        [req.body.prenom, req.body.nom, req.body.tel, req.body.website, req.body.ville, req.body.couleur, req.body.taille, req.user.id],
+        function(result){
+            if(result.affectedRows != 1){
+                res.render('user/setting', {user: req.user, champ: req.body, errors: ["Erreurs inconnus"]})
+            }else{
+                res.redirect("/home/welcome");
+            }
+        });
+    }
+};

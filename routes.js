@@ -54,6 +54,7 @@ module.exports = function (app) {
     app.get('/draw/paint', ensureAuthenticated, userController.drawPaintGet);
     app.post('/draw/paint', ensureAuthenticated, userController.drawPaintPost);
     app.get('/user/setting', ensureAuthenticated, userController.settingGet);
+    app.post('/user/setting', ensureAuthenticated, userController.settingPost);
 
     // Admin
     app.get('/admin', isAdmin, adminController.index);
