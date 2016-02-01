@@ -46,7 +46,8 @@ module.exports = function(passport) {
                             id: result.id,
                             email: result.email,
                             picture: result.facebook_picture,
-                            name: result.nom
+                            name: result.nom,
+                            admin : result.admin
                         };
                     }else if(result.profilepic.length == 0) {
                         user = {

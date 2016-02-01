@@ -8,3 +8,4 @@ Promo : LPSIL IDSE
 - Paint
 - Guess
 - Inscription
+- Panneau admin

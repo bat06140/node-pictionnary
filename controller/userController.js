@@ -64,3 +64,9 @@ exports.welcomePost = function(req, res){
         })
     }
 };
+
+exports.settingGet = function(req, res){
+    mysql.selection("SELECT * FROM users WHERE id = ?", [req.user.id], function(result){
+        res.render('user/setting', {user: req.user, champ: result[0]});
+    });
+};
